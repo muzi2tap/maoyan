@@ -8,7 +8,7 @@
       <div class="movie_item_info">
         <h2>{{item.nm}}</h2>
         <p>
-          观众评:
+          观众评:1
           <span class="grade">{{item.sc}}</span>
         </p>
         <p>
