@@ -8,7 +8,7 @@
       <div class="movie_item_info">
         <h2>{{item.nm}}</h2>
         <p>
-          观众评:1
+          观众评:
           <span class="grade">{{item.sc}}</span>
         </p>
         <p>
@@ -47,11 +47,21 @@ export default {
       this.movieList = data.data.movieList;
     }
   },
+  watch:{
+    movieList(){
+      this.$refs.scroll.handleRefreshDown();
+    }
+  },
   mounted(){
     this.$refs.scroll.handleScroll();
     this.$refs.scroll.hanlepullingDown(()=>{
-      this.handleGetMovieList(20)
+      var arr=[10,20,42,50,56,60];
+      let index=parseInt(Math.random()*6);
+      this.handleGetMovieList(arr[index]);
     });
+    this.$refs.scroll.handlepullingUp(()=>{
+      console.log(111);
+    })
   }
 };
 </script>

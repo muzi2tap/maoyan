@@ -73,13 +73,25 @@
         </div>
       </div>
     </div>
+    <div class="city_list_index">
+      <div class="index_item">A</div>
+      <div class="index_item">B</div>
+      <div class="index_item">C</div>
+      <div class="index_item">D</div>
+      <div class="index_item">E</div>
+    </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  name:"City",
+  created(){
+    this.$store.dispatch("city/handleGetCityList")
+  }
+};
 </script>
-
+ 
 <style>
 .city_container {
   height: 100%;
