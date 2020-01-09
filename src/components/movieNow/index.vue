@@ -38,7 +38,7 @@ export default {
     };
   },
   created() {
-    this.handleGetMovieList(10);
+    this.handleGetMovieList(1);
   },
   methods:{
     async handleGetMovieList(cityId){

@@ -1,7 +1,9 @@
 import {cityApi} from "@api/city";
 let state ={
-    hotList:[],
-    cityList:[]
+    hotCity:JSON.parse(sessionStorage.getItem("hotCity"))||[],
+    cityList:JSON.parse(sessionStorage.getItem("cityList"))||[],
+    nm:"北京",
+    cityId:1
 }
 
 let actions={
@@ -80,7 +82,20 @@ let mutations={
             }
             return bStop;
         }
-        console.log(cityList)
+
+        cityList.sort((a,b)=>{
+            if(a.index>b.index){
+                return 1;
+            }else{
+                return -1;
+            }
+        })
+
+        state.hotCity=hotCity;
+        state.cityList=cityList;
+
+        sessionStorage.setItem("hotCity",JSON.stringify(hotCity));
+        sessionStorage.setItem("cityList",JSON.stringify(cityList));
     }
 }
 

@@ -3,92 +3,39 @@
     <div class="city_body">
       <div class="hot_city">热门城市</div>
       <div class="hot_city_list">
-        <div class="hot_city_name">北京</div>
-        <div class="hot_city_name">北京</div>
-        <div class="hot_city_name">北京</div>
-        <div class="hot_city_name">北京</div>
-        <div class="hot_city_name">北京</div>
+        <div class="hot_city_name" v-for="(item,index) in hotCity" :key="index">{{item.nm}}</div>
       </div>
       <!-- 城市列表 -->
       <div class="city_list">
-        <div class="city_list_item">
-          <div class="city_title_letter">A</div>
+        <div class="city_list_item" v-for="(item) in cityList" :key="item.id">
+          <div class="city_title_letter">{{item.index}}</div>
           <div class="city_list_name">
-            <div class="city_list_name_item">北京</div>
-            <div class="city_list_name_item">北京</div>
-            <div class="city_list_name_item">北京</div>
-            <div class="city_list_name_item">北京</div>
-            <div class="city_list_name_item">北京</div>
-            <div class="city_list_name_item">北京</div>
-            <div class="city_list_name_item">北京</div>
-          </div>
-        </div>
-        <div class="city_list_item">
-          <div class="city_title_letter">B</div>
-          <div class="city_list_name">
-            <div class="city_list_name_item">北京</div>
-            <div class="city_list_name_item">北京</div>
-            <div class="city_list_name_item">北京</div>
-            <div class="city_list_name_item">北京</div>
-            <div class="city_list_name_item">北京</div>
-            <div class="city_list_name_item">北京</div>
-            <div class="city_list_name_item">北京</div>
-          </div>
-        </div>
-        <div class="city_list_item">
-          <div class="city_title_letter">C</div>
-          <div class="city_list_name">
-            <div class="city_list_name_item">北京</div>
-            <div class="city_list_name_item">北京</div>
-            <div class="city_list_name_item">北京</div>
-            <div class="city_list_name_item">北京</div>
-            <div class="city_list_name_item">北京</div>
-            <div class="city_list_name_item">北京</div>
-            <div class="city_list_name_item">北京</div>
-          </div>
-        </div>
-        <div class="city_list_item">
-          <div class="city_title_letter">D</div>
-          <div class="city_list_name">
-            <div class="city_list_name_item">北京</div>
-            <div class="city_list_name_item">北京</div>
-            <div class="city_list_name_item">北京</div>
-            <div class="city_list_name_item">北京</div>
-            <div class="city_list_name_item">北京</div>
-            <div class="city_list_name_item">北京</div>
-            <div class="city_list_name_item">北京</div>
-          </div>
-        </div>
-        <div class="city_list_item">
-          <div class="city_title_letter">E</div>
-          <div class="city_list_name">
-            <div class="city_list_name_item">北京</div>
-            <div class="city_list_name_item">北京</div>
-            <div class="city_list_name_item">北京</div>
-            <div class="city_list_name_item">北京</div>
-            <div class="city_list_name_item">北京</div>
-            <div class="city_list_name_item">北京</div>
-            <div class="city_list_name_item">北京</div>
+            <div class="city_list_name_item" v-for="(child) in item.List" :key="child.id">{{child.nm}}</div>
           </div>
         </div>
       </div>
     </div>
     <div class="city_list_index">
-      <div class="index_item">A</div>
-      <div class="index_item">B</div>
-      <div class="index_item">C</div>
-      <div class="index_item">D</div>
-      <div class="index_item">E</div>
+      <div class="index_item" v-for="item in cityList" :key="item.id">{{item.index}}</div>
     </div>
   </div>
 </template>
 
 <script>
+import {mapState} from "vuex";
 export default {
   name:"City",
   created(){
-    this.$store.dispatch("city/handleGetCityList")
-  }
+    if(!(sessionStorage.getItem("cityList") && sessionStorage.getItem("hotCity"))){
+      this.$store.dispatch("city/handleGetCityList")
+    }
+  },
+  computed:{
+    ...mapState({
+      hotCity:state=>state.city.hotCity,
+      cityList:state=>state.city.cityList
+    })
+  },
 };
 </script>
  
