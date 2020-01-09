@@ -34,17 +34,26 @@ export default {
   name: "MovieNow",
   data() {
     return {
-      movieList: []
+      movieList: [],
+      typeId:1
     };
   },
   created() {
     this.handleGetMovieList(1);
   },
+  activated(){
+    if(this.typeId==this.$store.state.city.cityId){
+      this.movieList=JSON.parse(sessionStorage.getItem("movieList"))
+    }else{
+      this.handleGetMovieList(this.$store.state.city.cityId);
+      this.typeId=this.$store.state.city.cityId;
+    }  
+  },
   methods:{
     async handleGetMovieList(cityId){
-      cityId=cityId?cityId:10
       let data = await movienowApi(cityId);
       this.movieList = data.data.movieList;
+      sessionStorage.setItem("movieList",JSON.stringify(data.data.movieList))
     }
   },
   watch:{

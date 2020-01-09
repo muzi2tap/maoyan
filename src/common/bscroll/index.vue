@@ -33,6 +33,9 @@ export default {
     });
   },
   methods: {
+    handleScrollTo(y){
+      this.scroll.scrollTo(0,y,300);
+    },
     // 下拉出现loading
     handleScroll() {
       this.scroll.on("scroll", pro => {
