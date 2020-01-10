@@ -30,7 +30,17 @@ const router=new VueRouter({
         {
             path:"/login",
             name:"login",
-            component:_=>import("@pages/login")
+            component:_=>import("@pages/login"),
+            meta:{
+                flag:false,
+                requireAuth:false
+            }
+        },
+        {
+            path:"/detail/:id/:nm",
+            name:"detail",
+            component:_=>import("@pages/detail"),
+            props:true
         }
     ]
 })

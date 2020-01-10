@@ -1,31 +1,31 @@
 <template>
-<Alley-scroll ref="scroll">
-  <div class="movie_body" >
-    <div class="movie_item" v-for="(item,index) in movieList" :key="index">
-      <div class="movie_item_pic">
-        <img :src="item.img | toImg('128.180')" />
-      </div>
-      <div class="movie_item_info">
-        <h2>{{item.nm}}</h2>
-        <p>
-          观众评:
-          <span class="grade">{{item.sc}}</span>
-        </p>
-        <p>
-          主演:
-          <span>{{item.star}}</span>
-        </p>
-        <p>
-          <span>{{item.showInfo}}</span>
-        </p>
-      </div>
-      <div
-        class="movie_item_btn"
-        :class="item.globalReleased?'asale':'ticket'"
-      >{{item.globalReleased?'购票':'预售'}}</div>
+  <Alley-scroll ref="scroll">
+    <div class="movie_body">
+      <router-link class="movie_item" tag="div" :to="'/detail/'+item.id+'/'+item.nm" v-for="(item,index) in movieList" :key="index">
+        <div class="movie_item_pic">
+          <img :src="item.img | toImg('128.180')" />
+        </div>
+        <div class="movie_item_info">
+          <h2>{{item.nm}}</h2>
+          <p>
+            观众评:
+            <span class="grade">{{item.sc}}</span>
+          </p>
+          <p>
+            主演:
+            <span>{{item.star}}</span>
+          </p>
+          <p>
+            <span>{{item.showInfo}}</span>
+          </p>
+        </div>
+        <div
+          class="movie_item_btn"
+          :class="item.globalReleased?'asale':'ticket'"
+        >{{item.globalReleased?'购票':'预售'}}</div>
+      </router-link>
     </div>
-  </div>
-</Alley-scroll>
+  </Alley-scroll>
 </template>
 
 <script>
@@ -35,42 +35,42 @@ export default {
   data() {
     return {
       movieList: [],
-      typeId:1
+      typeId: 1
     };
   },
   created() {
     this.handleGetMovieList(1);
   },
-  activated(){
-    if(this.typeId==this.$store.state.city.cityId){
-      this.movieList=JSON.parse(sessionStorage.getItem("movieList"))
-    }else{
+  activated() {
+    if (this.typeId == this.$store.state.city.cityId) {
+      this.movieList = JSON.parse(sessionStorage.getItem("movieList"));
+    } else {
       this.handleGetMovieList(this.$store.state.city.cityId);
-      this.typeId=this.$store.state.city.cityId;
-    }  
-  },
-  methods:{
-    async handleGetMovieList(cityId){
-      let data = await movienowApi(cityId);
-      this.movieList = data.data.movieList;
-      sessionStorage.setItem("movieList",JSON.stringify(data.data.movieList))
+      this.typeId = this.$store.state.city.cityId;
     }
   },
-  watch:{
-    movieList(){
+  methods: {
+    async handleGetMovieList(cityId) {
+      let data = await movienowApi(cityId);
+      this.movieList = data.data.movieList;
+      sessionStorage.setItem("movieList", JSON.stringify(data.data.movieList));
+    }
+  },
+  watch: {
+    movieList() {
       this.$refs.scroll.handleRefreshDown();
     }
   },
-  mounted(){
+  mounted() {
     this.$refs.scroll.handleScroll();
-    this.$refs.scroll.hanlepullingDown(()=>{
-      var arr=[10,20,42,50,56,60];
-      let index=parseInt(Math.random()*6);
+    this.$refs.scroll.hanlepullingDown(() => {
+      var arr = [10, 20, 42, 50, 56, 60];
+      let index = parseInt(Math.random() * 6);
       this.handleGetMovieList(arr[index]);
     });
-    this.$refs.scroll.handlepullingUp(()=>{
+    this.$refs.scroll.handlepullingUp(() => {
       console.log(111);
-    })
+    });
   }
 };
 </script>

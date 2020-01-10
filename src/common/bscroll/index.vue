@@ -30,6 +30,8 @@ export default {
       },
       // 上拉加载更多
       pullUpLoad:true,
+      click:true,
+      tap:true,
     });
   },
   methods: {

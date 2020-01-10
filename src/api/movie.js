@@ -1,5 +1,9 @@
 import http from "@utils/request";
 
+/* 
+    @params cityId:城市Id
+    接口:正在热映
+ */
 export const movienowApi=(cityId=10)=>http({
     method:"get",
     url:"api/movieOnInfoList",
@@ -8,10 +12,27 @@ export const movienowApi=(cityId=10)=>http({
     }
 })
 
+/* 
+    @params cityId:城市Id
+    接口:即将上映
+ */
 export const moviecommingApi=(cityId=10)=>http({
     method:"get",
-    url:"/api/movieComingList",
+    url:"/ajax/comingList",
     data:{
-        cityId:cityId
+        ci:cityId,
+        token:""
+    }
+})
+
+/* 
+    @params movieId:电影Id
+    接口:电影详情
+ */
+export const movieDetailApi=(movieId)=>http({
+    method:"get",
+    url:"/ajax/detailmovie",
+    data:{
+        movieId
     }
 })

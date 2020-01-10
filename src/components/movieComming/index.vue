@@ -1,7 +1,7 @@
 <template>
-  <Alley-scroll>
+  <Alley-scroll ref="scroll">
     <div class="movie_body">
-      <div class="movie_item" v-for="(item,index) in commingList" :key="index">
+      <router-link class="movie_item" tag="div" :to="'/detail/'+item.id+'/'+item.nm" v-for="(item,index) in commingList" :key="index">
         <div class="movie_item_pic">
           <img :src="item.img | toImg('128.180')" alt />
         </div>
@@ -22,7 +22,7 @@
           class="movie_item_btn"
           :class="item.showst==4?'ticket':'wish'"
         >{{item.showst==4?'预售':'想看'}}</div>
-      </div>
+      </router-link>
     </div>
   </Alley-scroll>
 </template>
@@ -33,13 +33,43 @@ export default {
   name: "MovieComming",
   data() {
     return {
-      commingList: []
+      commingList: {},
+      typeId: 1
     };
   },
-  async created() {
-    let data = await moviecommingApi();
-    this.commingList = data.data.commingList;
-    // console.log(data)
+  created() {
+    this.handleGetMoviecooming(1);
+  },
+  activated() {
+    if (this.typeId == this.$store.state.city.cityId) {
+      this.comingList = JSON.parse(sessionStorage.getItem("comingList"));
+    } else {
+      this.handleGetMoviecooming(this.$store.state.city.cityId);
+      this.typeId = this.$store.state.city.cityId;
+    }
+  },
+  methods: {
+    async handleGetMoviecooming(cityId) {
+      let data = await moviecommingApi(cityId);
+      this.commingList = data.coming;
+      sessionStorage.setItem("comingList", JSON.stringify(data.coming));
+    }
+  },
+  watch: {
+    commingList() {
+      this.$refs.scroll.handleRefreshDown();
+    }
+  },
+  mounted() {
+    this.$refs.scroll.handleScroll();
+    this.$refs.scroll.hanlepullingDown(() => {
+      var arr = [10, 20, 42, 50, 56, 60];
+      let index = parseInt(Math.random() * 6);
+      this.handleGetMoviecooming(arr[index]);
+    });
+    this.$refs.scroll.handlepullingUp(() => {
+      console.log(111);
+    });
   }
 };
 </script>
