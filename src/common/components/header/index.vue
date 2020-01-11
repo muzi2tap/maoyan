@@ -7,7 +7,7 @@
         >
             <i class="iconfont">&#xe621;</i>
         </v-touch>
-        <h2>{{title}}</h2>
+        <h2 class="title">{{title}}</h2>
     </div>
 </template>
 
@@ -47,5 +47,12 @@ export default {
         position: absolute;
         left: .2rem;
         font-size: .4rem;
+    }
+    .title{
+        width:60%;
+        text-align: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 </style>

@@ -6,7 +6,7 @@ import http from "@utils/request";
  */
 export const movienowApi=(cityId=10)=>http({
     method:"get",
-    url:"api/movieOnInfoList",
+    url:"/api/movieOnInfoList",
     data:{
         cityId:cityId
     }
@@ -34,5 +34,20 @@ export const movieDetailApi=(movieId)=>http({
     url:"/ajax/detailmovie",
     data:{
         movieId
+    }
+})
+
+/* 
+    @params
+    cityId:城市ID
+    kw:搜索的关键字
+    接口:电影搜索
+ */
+export const movieSearch=(cityId,kw)=>http({
+    method:"get",
+    url:"/ajax/search",
+    data:{
+        cityId,
+        kw
     }
 })

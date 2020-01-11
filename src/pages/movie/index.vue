@@ -24,8 +24,27 @@
 </template>
 
 <script>
+import MessageBox from "../../lib/messageBox/index.js"
 export default {
-  name: "Movie"
+  name: "Movie",
+  data(){
+    return {
+      nm:"北京"
+    }
+  },
+  created(){
+    this.nm=this.$store.state.city.nm;
+    MessageBox({
+      title:"城市定位",
+      content:this.nm,
+      /* ok:()=>{
+        alert(1)
+      } */
+    });
+  },
+ /*  components:{
+    MessageBox
+  } */
 };
 </script>
 

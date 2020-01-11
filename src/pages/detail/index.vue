@@ -36,7 +36,6 @@ export default {
     async created(){
         let data=await movieDetailApi(this.id);
         this.detail=data.detailMovie
-        console.log(this.detail)
     }
 };
 </script>
